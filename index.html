@@ -458,6 +458,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         <div class="f"><label>Job Title</label><select id="f-jobTitle"></select></div>
         <div class="f"><label>Reporting To</label><select id="f-reportingTo"></select></div>
         <div class="f"><label>Location</label><select id="f-location"></select></div>
+        <div class="f"><label>Gender</label><select id="f-gender"></select></div>
         <div class="f"><label>Status (Roster)</label><select id="f-status">
           <option value="">All Statuses</option><option value="Working">Working</option><option value="Relieved">Relieved</option>
         </select></div>
@@ -1157,7 +1158,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     }
   }
 
-  const catFilterFields = ['corpGF','department','jobTitle','reportingTo','location'];
+  const catFilterFields = ['corpGF','department','jobTitle','reportingTo','location','gender'];
   function distinctVals(field){
     const s = new Set();
     rawRows.forEach(r=>{ if(r[field]!=null && String(r[field]).trim()!=='') s.add(String(r[field]).trim()); });
@@ -1321,14 +1322,14 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       joinings: {
         rows: joiners,
         cols: ['empNo','name','department','jobTitle','dateJoined','location'],
-        formula: 'Monthly Joinings (Strictly from Date Joined):\n'
+        formula: 'Joinings (Strictly from Date Joined):\n'
           + 'Condition: Date Joined falls between ' + fmt(periodInfo.start) + ' and ' + fmt(periodInfo.end) + ' (inclusive).\n'
           + 'Total Joinees in ' + periodInfo.label + ': ' + joiners.length
       },
       exitsKpi: {
         rows: exits,
         cols: ['empNo','name','department','exitDate','exitStatus','dateJoined'],
-        formula: 'Monthly Exits (Strictly from Exit Date):\n'
+        formula: 'Exits (Strictly from Exit Date):\n'
           + 'Condition: Exit Date falls between ' + fmt(periodInfo.start) + ' and ' + fmt(periodInfo.end) + ' (inclusive).\n'
           + 'Total Exits in ' + periodInfo.label + ': ' + exits.length
       },
@@ -1374,8 +1375,8 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     // 8 Exact KPI Cards matching screenshot layout & order
     const kpis = [
       { key: 'currentHC', label: 'Current HC', value: closingHC, foot: 'active at period end' },
-      { key: 'joinings', label: 'Monthly Joinings', value: joiners.length, foot: 'from Date Joined' },
-      { key: 'exitsKpi', label: 'Monthly Exits', value: exits.length, foot: 'from Exit Date' },
+      { key: 'joinings', label: 'Joinings', value: joiners.length, foot: 'from Date Joined' },
+      { key: 'exitsKpi', label: 'Exits', value: exits.length, foot: 'from Exit Date' },
       { key: 'openingHC', label: 'Opening HC', value: openingHC, foot: 'active at period start' },
       { key: 'growthPct', label: 'Growth %', value: (growthPct >= 0 ? '+' : '') + growthPct.toFixed(1) + '%', cls: growthPct >= 0 ? 'good' : 'bad', foot: 'Joinings ÷ Avg HC' },
       { key: 'attritionRate', label: 'Attrition Rate', value: attritionRate.toFixed(1) + '%', cls: attritionRate > 10 ? 'bad' : (attritionRate > 5 ? 'warn' : 'good'), foot: 'Exits ÷ Avg HC' },
